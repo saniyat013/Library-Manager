@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utility.LibraryManagerUtil;
 
 public class LibraryAssistant extends Application {
     
@@ -18,6 +19,9 @@ public class LibraryAssistant extends Application {
         stage.setTitle("Library Manager Login");
         stage.setScene(scene);
         stage.show();
+        
+        LibraryManagerUtil.setStageIcon(stage);
+        
     }
 
     /**

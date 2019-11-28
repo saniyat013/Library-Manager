@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import settings.Preferences;
+import utility.LibraryManagerUtil;
 
 public class loginController implements Initializable {
 
@@ -69,6 +70,9 @@ public class loginController implements Initializable {
             stage.setTitle("Library Manager");
             stage.setScene(new Scene(parent));
             stage.show();
+            
+            LibraryManagerUtil.setStageIcon(stage);
+            
         } catch (IOException ex) {
             Logger.getLogger(homeController.class.getName()).log(Level.SEVERE, null, ex);
         }
