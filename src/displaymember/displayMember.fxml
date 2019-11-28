@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="displayMemberPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" 
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="displaymember.displayMemberController">
+    <stylesheets>
+        <URL value="@displaymember.css" />
+    </stylesheets>
+   <children>
+      <TableView fx:id="displayMemberTable" layoutX="52.0" layoutY="24.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="nameCol" prefWidth="225.0" text="Name" />
+          <TableColumn fx:id="idCol" prefWidth="75.0" text="Member ID" />
+            <TableColumn fx:id="mobileCol" prefWidth="150.0" text="Mobile" />
+            <TableColumn fx:id="emailCol" prefWidth="150.0" text="Email" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
