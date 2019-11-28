@@ -179,45 +179,61 @@ public class homeController implements Initializable {
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
         
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Issue Operation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure to issue the book" + bookName.getText() + 
-                "\nto " + memberName.getText() + " ?");
-        
-        Optional<ButtonType> response = alert.showAndWait();
-        if(response.get() == ButtonType.OK){
-            PreparedStatement pst1 = conn.prepareStatement("insert into issue (memberID, bookID) values (?,?)");
-            pst1.setString(1, memberID);
-            pst1.setString(2, bookID);
-            pst1.execute();
-            
-            PreparedStatement pst2 = conn.prepareStatement("update book set isAvail = ? where id = ?");
-            pst2.setBoolean(1, false);
-            pst2.setString(2, bookID);   
+        if(memberID.equals("") || bookID.equals("")){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Book Not Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please Select Book and Member First..");
+            alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Issue Operation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure to issue the book" + bookName.getText() + 
+                    "\nto " + memberName.getText() + " ?");
 
-            if(pst2.executeUpdate() == 1){
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Success");
-                alert1.setHeaderText(null);
-                alert1.setContentText("Book Issue Complete");
-                alert1.showAndWait();
+            Optional<ButtonType> response = alert.showAndWait();
+            
+            if(response.get() == ButtonType.OK){
+                try{
+                    PreparedStatement pst1 = conn.prepareStatement("insert into issue (memberID, bookID) values (?,?)");
+                    pst1.setString(1, memberID);
+                    pst1.setString(2, bookID);
+                    pst1.execute();
+
+                    PreparedStatement pst2 = conn.prepareStatement("update book set isAvail = ? where id = ?");
+                    pst2.setBoolean(1, false);
+                    pst2.setString(2, bookID);   
+
+                    if(pst2.executeUpdate() == 1){
+                        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Success");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Book Issue Complete");
+                        alert1.showAndWait();
+                    }else{
+                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("Failed");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Issue Operation Failed");
+                        alert1.showAndWait();
+                    }
+                    pst1.close();
+                    pst2.close();
+                }catch(Exception e){
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("ATTENTION");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("Book Already Issued");
+                    alert1.showAndWait();
+                }
             }else{
-                Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                alert1.setTitle("Failed");
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Cancelled");
                 alert1.setHeaderText(null);
-                alert1.setContentText("Issue Operation Failed");
+                alert1.setContentText("Issue Operation Cancelled");
                 alert1.showAndWait();
             }
-                                      
-            pst1.close();
-            pst2.close();
-        }else{
-            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-            alert1.setTitle("Cancelled");
-            alert1.setHeaderText(null);
-            alert1.setContentText("Issue Operation Cancelled");
-            alert1.showAndWait();
         }
     }
 
