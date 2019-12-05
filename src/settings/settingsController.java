@@ -49,7 +49,7 @@ public class settingsController implements Initializable {
 
     private void initDefaultValues() {
         Preferences preferences = Preferences.getPreferences();
-        nDaysWithoutFine.setText(String.valueOf(preferences.nDaysWithoutFine));
+        nDaysWithoutFine.setText(String.valueOf(preferences.getnDaysWithoutFine()));
         finePerDay.setText(String.valueOf(preferences.getFinePerDay()));
         username.setText(String.valueOf(preferences.getUsername()));
         password.setText(String.valueOf(preferences.getPassword()));
